@@ -1,0 +1,111 @@
+Cách telnet 
+hostname <tên thiết bị >
+enable password <mật khẩu >
+int vl 1
+ip address <địa chỉ ip > 
+no shutdown 
+line vty 0 15 
+password <mật khẩu>
+login
+exit 
+Putty nhập địa chỉ ip của int vl 1 và nhập mật khẩu vty 0 15 
+
+cách ssh 
+hostname <tên thiết bị >
+enable password <mật khẩu >
+int vl 1
+ip address <địa chỉ ip > 
+no shutdown
+ip domain-name cisco
+username admin password cisco
+line vty 0 15 
+pas
+login
+login lo
+login local 
+tran
+transport in
+transport input all
+transport input all 
+exit
+cy
+cr
+crypto k
+crypto key g
+crypto key generate r
+crypto key generate rsa 
+The name for the keys will be: SW1.cisco
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+
+cách cấu hình vlan 
+vl 10 //tao vlan 10
+na KT //dat ten vl 
+
+cấu hình sw1 và 2
+vl 10
+na kt
+vl 20
+na pkd
+int f0/1
+sw mo ac 
+sw ac vl 10 
+int f0/2
+sw mo tr
+int f0/3
+sw mo ac 
+sw ac vl 20
+exit
+
+cấu hình router R1
+en
+conf t
+hostname R1
+int g0/0
+no shutdown
+int g0/0.10
+en do 10
+ip add	172.16.10.1 255.255.255.0
+no shutdown
+int g0/0.20
+en do 20
+ip add	172.16.20.1 255.255.255.0
+no shutdown
+int g0/1 
+ip add 200.200.200.1 255.255.255.0
+no shutdown
+ip routing
+ip route 192.168.0.0 255.255.0.0 g0/1
+ip route 192.168.0.0 255.255.0.0 200.200.200.2
+
+cấu hình router R2
+en
+conf t
+hostname R2
+int g0/1
+no shutdown
+int g0/1.10
+en do 10
+ip add	192.168.10.1 255.255.255.0
+no shutdown
+int g0/1.20
+en do 20
+ip add	192.168.20.1 255.255.255.0
+no shutdown
+int g0/0 
+ip add 200.200.200.2 255.255.255.0
+no shutdown
+ip routing
+ip route 172.16.0.0 255.255.0.0 g0/0
+ip route 172.16.0.0 255.255.0.0 200.200.200.1
+
+
+
+
+
+
+

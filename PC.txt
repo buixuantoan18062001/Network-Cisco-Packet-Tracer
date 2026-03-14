@@ -1,0 +1,45 @@
+CreateFolder.bat
+
+for /l %%i in (1,1,5) do (
+	md C:\share\GiaoVien\GV%%i
+	md C:\share\SinhVien\SV%%i
+
+)
+
+CreateGVSV.bat
+
+net localgroup SinhVien /add
+net localgroup Giaovien /add
+
+for /l %%i in (1,1,5) do (
+	net user SV%%i SV%%i /add
+	net localgroup SinhVien SV%%i /add
+
+	net user GV%%i GV%%i /add
+	net localgroup Giaovien GV%%i /add
+)
+
+CreateUser.bat
+
+for /l %%i in (1,1,2) do (
+	net user PC0%%i PC0%%i /add
+	md C:\share\Users\PC0%%i
+
+)
+md C:\share\Public
+
+MapDriver.bat
+
+net use Z: /delete /y
+net use X: /delete /y
+
+net use Z: \\192.168.10.1\Public /user: PC01 PC01
+net use X: \\192.168.10.1\PC01 /user: PC01 PC01
+
+MapDriver.bat
+
+net use Z: /delete /y
+net use X: /delete /y
+
+net use Z: \\192.168.10.1\Public /user: PC02 PC02
+net use X: \\192.168.10.1\PC02 /user: PC02 PC02

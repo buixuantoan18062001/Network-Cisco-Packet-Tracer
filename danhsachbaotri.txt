@@ -1,0 +1,96 @@
+	sudo apt update && sudo apt upgrade
+
+cài đặt nodejs version 16 trở lên
+	curl -s https://deb.nodesource.com/setup_16.x | sudo bash
+	sudo apt install nodejs -y
+	node -v
+git clone project text thử
+
+	git clone <link github>
+
+cài đặt nginx
+
+	sudo apt update
+	sudo apt install nginx
+	sudo ufw app list
+	sudo ufw allow 'Nginx HTTP'
+	sudo ufw status
+	sudo ufw allow 'Nginx HTTPS'
+	sudo ufw status
+
+	sudo ufw allow 3000
+
+	systemctl status nginx
+	sudo systemctl restart nginx
+
+
+cài đặt Certbot + Snaps
+	sudo snap install core; sudo snap refresh core
+	sudo snap install --classic certbot
+	sudo ln -s /snap/bin/certbot /usr/bin/certbot
+	sudo certbot certonly --nginx
+	sudo certbot renew --dry-run
+
+test02.nctuanit.com
+	
+cấu hình file defaul (font-end)
+	
+
+cấu hình nginx, cloudflare, ssl, https tạo file .conf ( back-end)
+	server {
+        listen 80;
+        listen [::]:80;
+        server_name     ;
+        rewrite ^ https://$server_name$request_uri permanent;
+	}
+	server {
+        	listen 443 ssl;
+        	listen [::]:443 ssl;
+        	server_name <name>;
+        	ssl on;
+        	ssl_certificate  /etc/letsencrypt/live/<name>/fullchain.pem;
+        	ssl_certificate_key  /etc/letsencrypt/live/<name>/privkey.pem;
+        	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        	root  /path/;
+        	index index.html;
+        	access_log /var/log/nginx/example.com.access.log;
+        	error_log /var/log/nginx/example.com.error.log;
+	  	location / {
+         	proxy_pass	http://localhost:<port>;
+        	}	
+	}
+
+cài đặt tmux
+	sudo apt-get install tmux
+	tmux new -s <name-project>
+	tmux ls
+
+
+
+biến chương trình thành service linux vả khởi động cùng hệ thống
+	npm i
+	npm start
+
+
+deloy chương trình check thông tin server
+
+
+
+
+cài đặt database postgresql
+
+
+
+
+
+
+
+
+
+
+////Text
+
+service nginx restart
+service nginx status
+netstat -pnltu
+http://test04.nctuanit.com/

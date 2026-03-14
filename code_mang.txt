@@ -1,0 +1,191 @@
+-------------------------------------- S1 -----------------------------------
+
+-------------------------------- Cách telnet --------------------------------
+
+hostname S1
+
+banner motd #Noi dung muon hien thi#
+
+enable secret cisco
+line console 0
+password cisco
+login
+service password-encryption
+exit
+wr
+
+int vlan 1
+ip address 172.16.0.2 255.255.255.0
+no shutdown 
+
+line vty 0 15 
+password cisco
+login
+exit 
+
+Putty nhập địa chỉ ip của int vl 1 và nhập mật khẩu vty 0 15 
+
+-------------------------------- Cách ssh--------------------------------
+
+ip domain-name cisco
+
+username admin password cisco
+
+line vty 0 15 
+
+login local 
+
+transport input ssh
+
+exit
+
+crypto key generate rsa 
+
+How many bits in the modulus [512]: 1024
+
+-------------------------------- cách cấu hình vlan --------------------------------
+
+vlan 10
+name PC1
+int f0/1
+switchport mod access
+switchport access vlan 10
+
+vlan 20
+name PC2
+int f0/2
+switchport mod access
+switchport access vlan 20
+
+int f0/3
+switchport mod trunk
+exit
+
+wr
+
+show vlan	
+
+-------------------------------------- S2 -----------------------------------
+
+-------------------------------- Cách telnet --------------------------------
+
+hostname S1
+
+banner motd #Noi dung muon hien thi#
+
+enable secret cisco
+line console 0
+password cisco
+login
+service password-encryption
+exit
+wr
+
+int vlan 1
+ip address 192.168.0.2 255.255.255.0
+no shutdown 
+
+line vty 0 15 
+password cisco
+login
+exit 
+
+Putty nhập địa chỉ ip của int vl 1 và nhập mật khẩu vty 0 15 
+
+-------------------------------- Cách ssh--------------------------------
+
+ip domain-name cisco
+
+username admin password cisco
+
+line vty 0 15 
+
+login local 
+
+transport input ssh
+
+exit
+
+crypto key generate rsa 
+
+How many bits in the modulus [512]: 1024
+
+-------------------------------- cách cấu hình vlan --------------------------------
+
+vlan 10
+name PC1
+int f0/1
+switchport mod access
+switchport access vlan 10
+
+vlan 20
+name PC2
+int f0/2
+switchport mod access
+switchport access vlan 20
+
+int f0/3
+switchport mod trunk
+exit
+
+wr
+
+show vlan	
+
+
+-------------------------------- Tạo DHCP pool --------------------------------
+ip dhcp pool DHCP- <tên thiết bị >
+network 172.16.1.0 255.255.255.0
+default-router 192.168.1.1
+dns-server 8.8.8.8
+ip dhcp excluded-address 172.16.1.1 172.16.1.10
+show ip dhcp pool
+-------------------------------- Tạo DHCP pool --------------------------------
+ip dhcp pool DHCP- <tên thiết bị >
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+dns-server 8.8.8.8
+ip dhcp excluded-address 192.168.1.1 192.168.1.10
+show ip dhcp pool
+
+-------------------------------- Cấu hình router R1 ----------------------------
+en
+conf t
+hostname R1
+int g0/0
+no shutdown
+int g0/0.10
+en do 10
+ip add 172.16.10.10 255.255.255.0
+no shutdown
+int g0/0.20
+en do 20
+ip add 172.16.20.10 255.255.255.0
+no shutdown
+int g0/1 
+ip add 200.200.200.1 255.255.255.0
+no shutdown
+ip routing
+
+ip route 192.168.0.0 255.255.0.0 200.200.200.2
+
+-------------------------------- cấu hình router R2 --------------------------------
+en
+conf t
+hostname R2
+int g0/0
+no shutdown
+int g0/0.10
+en do 10
+ip add 192.168.10.10 255.255.255.0
+no shutdown
+int g0/0.20
+en do 20
+ip add 192.168.20.10 255.255.255.0
+no shutdown
+int g0/1
+ip add 200.200.200.2 255.255.255.0
+no shutdown
+ip routing
+
+ip route 172.16.0.0 255.255.0.0 200.200.200.1
